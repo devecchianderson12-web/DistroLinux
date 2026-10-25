@@ -16,7 +16,10 @@ done
 
 # Git/Windows pueden perder el bit de ejecucion o dejar saltos de linea CRLF: se arregla aca.
 find auto config -type f ! -name '*.deb' -exec sed -i 's/\r$//' {} +
-chmod +x auto/* config/hooks/normal/* 2>/dev/null || true
+chmod +x auto/*
+# Restos de versiones anteriores que rompen el build (el hook viejo corre antes que el nuevo)
+rm -f config/hooks/normal/0100-rustdesk-servicio.hook.chroot
+rm -rf config/packages.chroot
 
 # ---------------------------------------------------------------- 1) RustDesk
 # Se limpia antes de descargar (lb clean borra lo generado) y el .deb viaja dentro de la imagen
