@@ -19,9 +19,12 @@ find auto config -type f ! -name '*.deb' -exec sed -i 's/\r$//' {} +
 chmod +x auto/* config/hooks/normal/* 2>/dev/null || true
 
 # ---------------------------------------------------------------- 1) RustDesk
-PK=config/packages.chroot
+# Se limpia antes de descargar (lb clean borra lo generado) y el .deb viaja dentro de la imagen
+# en /opt/litedesk, donde lo recoge el hook config/hooks/normal/0100-rustdesk.hook.chroot.
+lb clean --purge >/dev/null 2>&1 || true
+PK=config/includes.chroot/opt/litedesk
+rm -rf "$PK"
 mkdir -p "$PK"
-rm -f "$PK"/rustdesk*.deb
 
 if [ -n "${RUSTDESK_VERSION:-}" ]; then
 	api="https://api.github.com/repos/rustdesk/rustdesk/releases/tags/${RUSTDESK_VERSION}"
@@ -59,7 +62,6 @@ fi
 echo "$name" > RUSTDESK_VERSION_USADA.txt
 
 # ---------------------------------------------------------------- 2) ISO
-lb clean --purge >/dev/null 2>&1 || true
 lb config
 lb build 2>&1 | tee build.log
 

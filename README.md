@@ -72,11 +72,18 @@ crees en el instalador.
 |---|---|
 | Idioma, teclado, zona horaria, nombre de la ISO | `auto/config` (línea `--bootappend-live`) |
 | Programas incluidos | `config/package-lists/litedesk.list.chroot` |
-| Arranque de programas al iniciar sesión | `config/includes.chroot/etc/skel/.config/openbox/autostart` |
-| Menú de clic derecho | `config/includes.chroot/etc/skel/.config/openbox/menu.xml` |
+| Arranque de programas al iniciar sesión | `config/includes.chroot/etc/xdg/openbox/autostart` |
+| Menú de clic derecho | `config/includes.chroot/etc/xdg/openbox/menu.xml` |
 | Versión fija de RustDesk | variable `RUSTDESK_VERSION` (ej. `1.4.0`) al ejecutar `build.sh` |
 
 Por defecto el idioma es español (Uruguay) con huso horario de Montevideo.
+
+## Si subís el proyecto desde la web de GitHub
+
+La subida por arrastrar y soltar **puede omitir carpetas y archivos que empiezan con punto**
+(`.github`, `.gitignore`...). Verificá que `.github/workflows/build-iso.yml` haya quedado en el
+repositorio; si no, creálo desde *Add file → Create new file*. El resto del proyecto
+evita carpetas ocultas a propósito.
 
 ## Limitaciones
 
@@ -92,8 +99,8 @@ Por defecto el idioma es español (Uruguay) con huso horario de Montevideo.
 build.sh                       Baja RustDesk y construye la ISO
 auto/                          Configuración de live-build
 config/package-lists/          Paquetes de Debian incluidos
-config/packages.chroot/        Aca se descarga el .deb de RustDesk
-config/hooks/normal/           Habilita el servicio de RustDesk
+config/hooks/normal/           Instala RustDesk y habilita su servicio
+config/includes.chroot/opt/    Aca build.sh deja el .deb de RustDesk (temporal)
 config/includes.chroot/        Archivos que se copian dentro del sistema
 .github/workflows/build-iso.yml  Construcción automática en GitHub
 ```

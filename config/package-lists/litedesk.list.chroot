@@ -20,7 +20,7 @@ htop
 firefox-esr
 firefox-esr-l10n-es-ar
 fonts-liberation
-fonts-noto-core
+fonts-dejavu-core
 
 # --- Red y sonido ---
 network-manager
@@ -38,8 +38,10 @@ console-setup
 tzdata
 zram-tools
 
-# --- Firmware (wifi, video, etc.) para que funcione en la mayor cantidad de equipos ---
-firmware-linux
+# --- Firmware puntual (no el metapaquete 'firmware-linux': arrastra cientos de MB innecesarios) ---
+firmware-linux-free
+firmware-misc-nonfree
+firmware-amd-graphics
 firmware-realtek
 firmware-iwlwifi
 firmware-atheros

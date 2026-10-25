@@ -1,0 +1,28 @@
+#!/bin/sh
+# Instala RustDesk dentro de la imagen y habilita su servicio de systemd para que
+# arranque junto con el sistema. El .deb lo deja build.sh en /opt/litedesk/.
+set -e
+export DEBIAN_FRONTEND=noninteractive
+
+DEB=$(ls /opt/litedesk/rustdesk*.deb 2>/dev/null | head -n1 || true)
+if [ -z "$DEB" ]; then
+	echo "ERROR: no encuentro el .deb de RustDesk en /opt/litedesk/. Contenido de /opt:" >&2
+	ls -laR /opt >&2 || true
+	exit 1
+fi
+
+echo "Instalando $DEB"
+apt-get update || true
+apt-get install -y "$DEB"
+
+if ! dpkg -s rustdesk >/dev/null 2>&1; then
+	echo "ERROR: RustDesk no quedo instalado." >&2
+	exit 1
+fi
+
+systemctl enable rustdesk.service || true
+echo "RustDesk instalado y servicio habilitado:"
+systemctl is-enabled rustdesk.service || true
+
+# El .deb ya esta instalado: no hace falta dejarlo dentro de la imagen.
+rm -rf /opt/litedesk
