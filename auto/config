@@ -1,0 +1,21 @@
+#!/bin/sh
+# Configuracion de live-build para LiteDesk (Debian 13 "trixie", amd64).
+# Se ejecuta con `lb config`; los cambios que quieras hacer (idioma, zona horaria,
+# nombre) se hacen aca.
+set -e
+
+lb config noauto \
+	--mode debian \
+	--distribution trixie \
+	--architecture amd64 \
+	--archive-areas "main non-free-firmware" \
+	--binary-images iso-hybrid \
+	--debian-installer live \
+	--debian-installer-distribution trixie \
+	--apt-recommends false \
+	--firmware-chroot true \
+	--iso-application "LiteDesk" \
+	--iso-publisher "LiteDesk" \
+	--iso-volume "LiteDesk" \
+	--bootappend-live "boot=live components quiet locales=es_UY.UTF-8 keyboard-layouts=es timezone=America/Montevideo" \
+	"${@}"

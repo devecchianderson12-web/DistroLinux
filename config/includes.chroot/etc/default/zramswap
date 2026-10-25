@@ -1,0 +1,3 @@
+# Memoria comprimida: rinde mucho en equipos con poca RAM.
+ALGO=zstd
+PERCENT=50

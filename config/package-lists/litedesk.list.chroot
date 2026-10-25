@@ -1,0 +1,46 @@
+# --- Escritorio liviano (X11: RustDesk sin atender funciona mejor sobre X11 que sobre Wayland) ---
+xserver-xorg
+libgl1-mesa-dri
+x11-xserver-utils
+xdg-utils
+dbus-x11
+libpam-systemd
+dbus-user-session
+polkitd
+lightdm
+lightdm-gtk-greeter
+openbox
+tint2
+pcmanfm
+lxterminal
+mousepad
+htop
+
+# --- Navegador ---
+firefox-esr
+firefox-esr-l10n-es-ar
+fonts-liberation
+fonts-noto-core
+
+# --- Red y sonido ---
+network-manager
+network-manager-gnome
+wpasupplicant
+pipewire-audio
+
+# --- Sistema, idioma y memoria ---
+sudo
+curl
+ca-certificates
+locales
+keyboard-configuration
+console-setup
+tzdata
+zram-tools
+
+# --- Firmware (wifi, video, etc.) para que funcione en la mayor cantidad de equipos ---
+firmware-linux
+firmware-realtek
+firmware-iwlwifi
+firmware-atheros
+firmware-brcm80211

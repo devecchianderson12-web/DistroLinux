@@ -1,0 +1,10 @@
+#!/bin/sh
+# El .deb de RustDesk registra su servicio de systemd; lo dejamos habilitado para que
+# arranque junto con el sistema (tambien antes de iniciar sesion).
+set -e
+if [ ! -x /usr/bin/rustdesk ]; then
+	echo "ERROR: RustDesk no quedo instalado en la imagen." >&2
+	exit 1
+fi
+systemctl enable rustdesk.service || true
+echo "RustDesk instalado y servicio habilitado."
