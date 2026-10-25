@@ -1,0 +1,53 @@
+name: Construir ISO
+
+on:
+  workflow_dispatch:        # boton "Run workflow" en la pestaña Actions
+  push:
+    tags: ["v*"]            # al subir un tag (v1.0.0) tambien se publica un Release
+
+permissions:
+  contents: write           # necesario para publicar el Release
+
+jobs:
+  iso:
+    runs-on: ubuntu-latest
+    timeout-minutes: 120
+    # live-build necesita un Debian "de verdad" y permisos para montar sistemas de archivos.
+    container:
+      image: debian:trixie
+      options: --privileged
+    steps:
+      - name: Instalar herramientas
+        run: |
+          apt-get update
+          apt-get install -y --no-install-recommends \
+            git ca-certificates curl jq gh live-build xorriso squashfs-tools \
+            debootstrap dosfstools mtools grub-pc-bin grub-efi-amd64-bin \
+            syslinux syslinux-common isolinux
+
+      - uses: actions/checkout@v6
+
+      - name: Construir la ISO
+        env:
+          GITHUB_TOKEN: ${{ github.token }}
+        run: bash build.sh
+
+      - name: Subir la ISO
+        uses: actions/upload-artifact@v7
+        with:
+          name: LiteDesk-ISO
+          path: |
+            LiteDesk-*.iso
+            LiteDesk-*.iso.sha256
+            RUSTDESK_VERSION_USADA.txt
+            build.log
+          retention-days: 14
+
+      - name: Publicar Release
+        if: startsWith(github.ref, 'refs/tags/v')
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          git config --global --add safe.directory "$GITHUB_WORKSPACE"
+          gh release create "${{ github.ref_name }}" LiteDesk-*.iso LiteDesk-*.iso.sha256 \
+            --title "LiteDesk ${{ github.ref_name }}" --generate-notes
