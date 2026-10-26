@@ -1,0 +1,9 @@
+[Desktop Entry]
+Type=Application
+Name=Instalar paquete .deb
+Comment=Instala programas con extension .deb
+Exec=litedesk-deb %F
+Icon=system-software-install
+Terminal=false
+Categories=System;Settings;
+MimeType=application/vnd.debian.binary-package;application/x-deb;

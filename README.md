@@ -56,7 +56,31 @@ sudo rustdesk --get-id
 - **Seguridad:** RustDesk sin atender equivale a dejar abierta la puerta de la máquina. Usá
   una clave larga y única, y no reutilices la de otras cuentas.
 
-## Instalar paquetes `.deb`
+## Qué trae el escritorio
+
+Barra inferior con lanzadores: **Firefox**, **Archivos**, **Terminal**, **Instalar paquete .deb** y
+**RustDesk**; al lado, las ventanas abiertas, la bandeja (icono de **wifi**) y el reloj.
+
+| Quiero... | Cómo |
+|---|---|
+| Navegar carpetas | Lanzador *Archivos* (PCManFM, muy liviano) o `Super+E`. También lee pendrives. |
+| Abrir una terminal | Lanzador *Terminal*, `Ctrl+Alt+T`, o clic derecho en el escritorio → Terminal |
+| Instalar un `.deb` | Doble clic sobre el archivo, o lanzador *Instalar paquete .deb* (abre un selector de archivos). Se instala con `apt`, que resuelve las dependencias y pide confirmación. |
+| Conectarme al wifi | Clic en el icono de red de la bandeja, elegir la red e ingresar la clave |
+| Menú completo | Clic derecho sobre el escritorio |
+
+**Wifi y drivers:** incluye NetworkManager y el firmware de las placas más comunes (Intel, Realtek,
+Atheros, Broadcom, MediaTek, Ralink y otras). Si tu placa no aparece: en la terminal `rfkill list`
+(para ver si está bloqueada) y `lspci -nn | grep -i net` o `lsusb` (para saber el modelo exacto), y
+decime cuál es para agregar su driver. Probar el wifi **dentro de una máquina virtual no sirve**:
+la VM solo tiene una placa de red virtual y no ve las redes inalámbricas; hay que probarlo en un
+equipo real o pasarle un adaptador USB wifi a la VM.
+
+**Instalado en el disco:** si en el instalador dejás vacía la contraseña de root, tu usuario queda con
+`sudo` (lo necesita el instalador de `.deb`). Si definís una contraseña de root, tu usuario no podrá
+usar `sudo`.
+
+## Instalar paquetes `.deb` desde la terminal
 
 ```
 sudo apt install ./programa.deb     # resuelve dependencias solo
@@ -72,6 +96,9 @@ crees en el instalador.
 |---|---|
 | Idioma, teclado, zona horaria, nombre de la ISO | `auto/config` (línea `--bootappend-live`) |
 | Programas incluidos | `config/package-lists/litedesk.list.chroot` |
+| Barra inferior (lanzadores, reloj) | `config/includes.chroot/etc/xdg/tint2/tint2rc` |
+| Instalador de .deb | `config/includes.chroot/usr/local/bin/litedesk-deb` |
+| Atajos de teclado | `config/hooks/normal/0200-openbox-atajos.hook.chroot` |
 | Arranque de programas al iniciar sesión | `config/includes.chroot/etc/xdg/openbox/autostart` |
 | Menú de clic derecho | `config/includes.chroot/etc/xdg/openbox/menu.xml` |
 | Versión fija de RustDesk | variable `RUSTDESK_VERSION` (ej. `1.4.0`) al ejecutar `build.sh` |

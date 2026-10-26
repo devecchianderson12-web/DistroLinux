@@ -1,12 +1,16 @@
 # Se ejecuta al iniciar la sesion de Openbox.
 
-# El equipo se administra a distancia: que la pantalla no se apague ni se bloquee.
+# Fondo liso (liviano) y sin apagado de pantalla: el equipo se administra a distancia.
+xsetroot -solid '#1b2430'
 xset s off
 xset -dpms
 xset s noblank
 
+# Barra inferior (lanzadores, ventanas, bandeja y reloj).
 tint2 &
-nm-applet &
 
-# Icono de RustDesk (el servicio ya corre desde el arranque; esto solo muestra la ventana/bandeja).
-(sleep 3; rustdesk --tray) &
+# Icono de wifi/red en la bandeja (se espera un instante a que la bandeja exista).
+(sleep 2; nm-applet) &
+
+# RustDesk (el servicio ya corre desde el arranque; esto solo muestra el icono).
+(sleep 4; rustdesk --tray) &

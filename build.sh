@@ -16,7 +16,8 @@ done
 
 # Git/Windows pueden perder el bit de ejecucion o dejar saltos de linea CRLF: se arregla aca.
 find auto config -type f ! -name '*.deb' -exec sed -i 's/\r$//' {} +
-chmod +x auto/*
+chmod +x auto/* config/hooks/normal/* 2>/dev/null || true
+chmod +x config/includes.chroot/usr/local/bin/* 2>/dev/null || true
 # Restos de versiones anteriores que rompen el build (el hook viejo corre antes que el nuevo)
 rm -f config/hooks/normal/0100-rustdesk-servicio.hook.chroot
 rm -rf config/packages.chroot

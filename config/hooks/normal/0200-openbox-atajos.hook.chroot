@@ -1,0 +1,8 @@
+#!/bin/sh
+# Atajos de teclado: Ctrl+Alt+T abre la terminal y Super+E el explorador de archivos.
+set -e
+RC=/etc/xdg/openbox/rc.xml
+if [ -f "$RC" ] && ! grep -q 'litedesk-atajos' "$RC"; then
+	sed -i '0,/<keyboard>/s//<keyboard>\n    <!-- litedesk-atajos -->\n    <keybind key="C-A-t"><action name="Execute"><command>lxterminal<\/command><\/action><\/keybind>\n    <keybind key="W-e"><action name="Execute"><command>pcmanfm<\/command><\/action><\/keybind>/' "$RC"
+	grep -q 'litedesk-atajos' "$RC" && echo "Atajos agregados a $RC" || echo "AVISO: no se pudieron agregar los atajos"
+fi

@@ -13,6 +13,9 @@
     <item label="Terminal">
       <action name="Execute"><command>lxterminal</command></action>
     </item>
+    <item label="Instalar paquete .deb">
+      <action name="Execute"><command>litedesk-deb</command></action>
+    </item>
     <item label="Editor de texto">
       <action name="Execute"><command>mousepad</command></action>
     </item>

@@ -1,0 +1,7 @@
+[Default Applications]
+application/vnd.debian.binary-package=litedesk-deb.desktop;
+application/x-deb=litedesk-deb.desktop;
+inode/directory=pcmanfm.desktop;
+text/html=firefox-esr.desktop;
+x-scheme-handler/http=firefox-esr.desktop;
+x-scheme-handler/https=firefox-esr.desktop;
